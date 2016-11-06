@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  {% load staticfiles %}
+  <link rel="stylesheet" href="{% static 'beltexam2/css/quote.css' %}">
+  <title>Quotes</title>
+</head>
+<body>
+    <div id='banner'>
+    <h1>Hello, {{user.name}}!</h1>
+  </div>
+      <div class='boxes'>
+      <h2>Quotable Quotes</h2>
+      <div id='allquotes'>
+        {%for thing in created%}
+        <div class="quotes">
+        <h4>{{thing.author}}:</h4>
+        <p>{{thing.comment}}</p>
+        <p>posted by <a href="/user/{{thing.creator.id}}">{{thing.creator.name}}</a> <button><a href="/user/{{thing.id}}/add">Add To Favorites</button></a></p>
+      </div>
+      {%endfor%}
+      </div>
+    </div>
+    <div class='boxes'>
+    <h2>Favorite Quotes</h2>
+    <div id="title">
+      {%for thingy in others%}
+      <div class="quotes">
+      <h4>{{thingy.author}}:</h4>
+      <p>{{thingy.comment}}</p>
+      <p>posted by <a href="/user/{{thingy.creator.id}}">{{thingy.creator.name}}</a> <button><a href="/user/{{thingy.id}}/remove">Remove from Faves</button></a></p>
+    </div>
+    {%endfor%}
+  </div>
+  <div id="comments">
+  <form action='/create' method='POST'>
+    {%csrf_token%}
+    Quoted By:<input type="text" name="quotedby"><br>
+    Message: <input type="text" name="message"><br>
+    <input type="submit" value="Submit">
+</div>
+</div>
+{% if messages %}
+  <ul class="messages">
+      {% for message in messages %}
+          <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+      {% endfor %}
+  </ul>
+{% endif %}
+<a href="/logout">Logout</a>
+</body>
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    {% load staticfiles %}
+   <link rel="stylesheet" href="{% static 'beltexam2/css/style.css' %}">
+  <title>login/reg</title>
+</head>
+<body>
+  {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+{% endif %}
+  <h1>WELCOME!</h1>
+  <div class='welcome'>
+      <form action='/register' method='POST'>
+        {% csrf_token %}
+        <fieldset>
+          <legend>Register</legend>
+          Name:<input type="text" name="name"><br>
+          Username:<input type="text" name="username"><br>
+          Email:<input type="email" name="email"><br>
+          Password: <input type="password" name="pw" placeholder="must contain 8 characters"><br>
+          Confirm Password:<input type="password" name="confirmpass"><br>
+          Date of Birth:<input type="date" name="birthdate"><br>
+        <input type="submit" value="register">
+        </fieldset>
+      </form>
+    </div>
+  <div class='welcome'>
+      <form action='/login' method='POST'>
+        {% csrf_token %}
+        <fieldset>
+          <legend>Login</legend>
+          Email:<input type="text" name="email"><br>
+          Password:<input type="password" name="pw"></br>
+        <input type="submit" value="Login">
+        </fieldset>
+      </form>
+    </div>
+</body>
+</html>
